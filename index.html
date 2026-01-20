@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Search Bot</title>
+</head>
+<body>
+
+<h1>🤖 AI Search Bot</h1>
+
+<input type="text" id="q" placeholder="Tanya sesuatu">
+<button onclick="askAI()">Tanya AI</button>
+
+<pre id="result"></pre>
+
+<script>
+function askAI(){
+    let q = document.getElementById("q").value;
+
+    fetch("http://127.0.0.1:5000/ask",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify({question:q})
+    })
+    .then(res=>res.json())
+    .then(data=>{
+        document.getElementById("result").innerText = 
+            "Pertanyaan: " + data.question + "\n\n" +
+            "Jawaban AI:\n- " + data.answer.join("\n- ");
+    })
+}
+</script>
+
+</body>
+</html>
